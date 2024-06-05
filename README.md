@@ -1,1 +1,1 @@
-# SocialMediaApplication
+# spring-boot3-jwt
