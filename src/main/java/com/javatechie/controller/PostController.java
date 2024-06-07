@@ -3,10 +3,8 @@ package com.javatechie.controller;
 import com.javatechie.entity.Post;
 import com.javatechie.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +16,10 @@ public class PostController {
     private PostService postService;
 
     @RequestMapping("/addPost")
-    public void addPost(Post post) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String addPost(@RequestBody Post post) {
         postService.save(post);
+        return "Post added successfully";
     }
 
     @GetMapping("/getAllPosts")
@@ -28,12 +28,15 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public Post getPostById(int id) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Post getPostById(@PathVariable int id) {
         return postService.findById(id).orElseThrow();
     }
 
     @DeleteMapping("delete/{id}")
-    public void deletePostById(int id) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String deletePostById(@PathVariable int id) {
         postService.deleteById(id);
+        return "Post deleted successfully";
     }
 }
