@@ -47,4 +47,10 @@ public class UserController {
     public List<String> suggestUserNames(@PathVariable("userName") String userName) {
          return userUtils.suggestUsernames(userName);
     }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<User> searchUsers(@RequestParam String username) {
+        return userService.findUsersByUsernameLike(username);
+    }
 }

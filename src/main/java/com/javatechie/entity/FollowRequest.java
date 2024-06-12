@@ -12,18 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FollowRequest {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "from_user_id")
+    @JoinColumn(name = "from_user_id", nullable = false)
     private User fromUser;
 
     @ManyToOne
-    @JoinColumn(name = "to_user_id")
+    @JoinColumn(name = "to_user_id", nullable = false)
     private User toUser;
 
     private String status; // PENDING, ACCEPTED, REJECTED
-
 }
