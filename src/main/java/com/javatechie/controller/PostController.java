@@ -1,6 +1,6 @@
 package com.javatechie.controller;
 
-import com.javatechie.entity.Post;
+import com.javatechie.entity.request.Post;
 import com.javatechie.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

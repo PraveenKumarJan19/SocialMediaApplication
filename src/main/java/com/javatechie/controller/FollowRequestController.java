@@ -1,6 +1,6 @@
 package com.javatechie.controller;
 
-import com.javatechie.entity.FollowRequest;
+import com.javatechie.entity.request.FollowRequest;
 import com.javatechie.service.FollowRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

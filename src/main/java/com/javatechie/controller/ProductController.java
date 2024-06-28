@@ -1,18 +1,27 @@
 package com.javatechie.controller;
 
 import com.javatechie.dto.AuthRequest;
-import com.javatechie.entity.Product;
-import com.javatechie.entity.UserInfo;
+import com.javatechie.dto.LoginResponse;
+import com.javatechie.entity.request.Product;
+import com.javatechie.entity.request.UserInfo;
+import com.javatechie.entity.response.UserResponse;
 import com.javatechie.service.JwtService;
 import com.javatechie.service.ProductService;
+import com.javatechie.utils.UserUtils;
+import jakarta.validation.Valid;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
 import java.util.List;
 
 @RestController
@@ -27,14 +36,9 @@ public class ProductController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome this endpoint is not secure";
-    }
-
     @PostMapping("/new")
-    public String addNewUser(@RequestBody UserInfo userInfo) {
-        return service.addUser(userInfo);
+    public ResponseEntity<UserResponse> addNewUser(@Valid @RequestBody UserInfo userInfo, BindingResult bindingResult) {
+        return service.addUser(userInfo, bindingResult);
     }
 
     @GetMapping("/all")
@@ -49,14 +53,29 @@ public class ProductController {
         return service.getProduct(id);
     }
 
-
     @PostMapping("/authenticate")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<LoginResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            String error = UserUtils.bindingResultErrors(bindingResult);
+            return new ResponseEntity<>(LoginResponse.builder()
+                    .message(error)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build(), HttpStatus.BAD_REQUEST);
+        }
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
+            String accessToken = jwtService.generateToken(authRequest.getUsername());
+            return new ResponseEntity<>(LoginResponse.builder().accessToken(accessToken)
+                    .message("Login SuccessFul")
+                    .statusCode(HttpStatus.OK.value())
+                    .build(), HttpStatus.OK);
         } else {
-            throw new UsernameNotFoundException("invalid user request !");
+            return new ResponseEntity<>(LoginResponse.builder()
+                    .message("Authentication Failed")
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build(), HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -3,10 +3,9 @@ package com.javatechie.utils;
 import com.javatechie.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class UserUtils {
@@ -47,5 +46,15 @@ public class UserUtils {
 
     private boolean isUsernameAvailable(String username) {
         return !userRepository.existsByUsername(username);
+    }
+
+    public static String bindingResultErrors(BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+        bindingResult.getFieldErrors().forEach(error -> {
+            String fieldName = error.getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors.toString();
     }
 }

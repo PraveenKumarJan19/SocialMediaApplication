@@ -1,7 +1,7 @@
 package com.javatechie.service;
 
-import com.javatechie.entity.FollowRequest;
-import com.javatechie.entity.User;
+import com.javatechie.entity.request.FollowRequest;
+import com.javatechie.entity.request.User;
 import com.javatechie.repository.FollowRequestRepository;
 import com.javatechie.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

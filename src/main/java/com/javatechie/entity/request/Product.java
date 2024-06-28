@@ -1,4 +1,4 @@
-package com.javatechie.entity;
+package com.javatechie.entity.request;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

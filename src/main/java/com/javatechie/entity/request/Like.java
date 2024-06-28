@@ -1,4 +1,4 @@
-package com.javatechie.entity;
+package com.javatechie.entity.request;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,13 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Post {
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int postId;
+    private int likeId;
     private int userId;
-    private String caption;
-    private String mediaUrl;
-    private String thumbnailUrl;
+    private int postId;
     private String createdAt;
 }

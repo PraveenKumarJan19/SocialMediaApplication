@@ -1,6 +1,6 @@
 package com.javatechie.config;
 
-import com.javatechie.entity.UserInfo;
+import com.javatechie.entity.request.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

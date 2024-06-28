@@ -1,6 +1,6 @@
 package com.javatechie.controller;
 
-import com.javatechie.entity.User;
+import com.javatechie.entity.request.User;
 import com.javatechie.service.UserService;
 import com.javatechie.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;

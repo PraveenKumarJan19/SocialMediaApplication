@@ -1,4 +1,4 @@
-package com.javatechie.entity;
+package com.javatechie.entity.request;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "\"user\"")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.javatechie.entity;
+package com.javatechie.entity.request;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,11 +17,11 @@ public class FollowRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_user_id", nullable = false)
     private User fromUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_user_id", nullable = false)
     private User toUser;
 

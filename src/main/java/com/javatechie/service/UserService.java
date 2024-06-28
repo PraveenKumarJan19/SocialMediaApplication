@@ -1,6 +1,6 @@
 package com.javatechie.service;
 
-import com.javatechie.entity.User;
+import com.javatechie.entity.request.User;
 import com.javatechie.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
