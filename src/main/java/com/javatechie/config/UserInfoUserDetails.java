@@ -1,6 +1,6 @@
 package com.javatechie.config;
 
-import com.javatechie.entity.request.UserInfo;
+import com.javatechie.entity.request.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +17,11 @@ public class UserInfoUserDetails implements UserDetails {
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public UserInfoUserDetails(UserInfo userInfo) {
-   
-        name=userInfo.getName();
-        password=userInfo.getPassword();
-        authorities= Arrays.stream(userInfo.getRoles().split(","))
+    public UserInfoUserDetails(User user) {
+
+        name = user.getActualUserName();
+        password = user.getPassword();
+        authorities = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }

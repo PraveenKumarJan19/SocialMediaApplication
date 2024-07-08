@@ -30,17 +30,7 @@ public class SecurityConfig {
     private JwtAuthFilter authFilter;
 
     @Bean
-    //authentication
     public UserDetailsService userDetailsService() {
-//        UserDetails admin = User.withUsername("Basant")
-//                .password(encoder.encode("Pwd1"))
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user = User.withUsername("John")
-//                .password(encoder.encode("Pwd2"))
-//                .roles("USER","ADMIN","HR")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin, user);
         return new UserInfoUserDetailsService();
     }
 
@@ -48,12 +38,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/products/new","/products/authenticate",
-                        "/user/add","/user/getUserNameSuggestion/**",
-                        "/follow-requests/**").permitAll()
+                .requestMatchers("/user/add", "/user/authenticate","/user/refresh-token",
+                        "/user/getUserNameSuggestion/**","/follow-requests/**").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/products/**","/post/**",
-                "/user/**")
+                .authorizeHttpRequests().requestMatchers("/post/**","/follow-requests/send","/follow-requests/hello",
+                "/user/search/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -75,9 +64,9 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
 }

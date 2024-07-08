@@ -1,7 +1,9 @@
 package com.javatechie.service;
 
+import com.javatechie.entity.request.Follow;
 import com.javatechie.entity.request.Post;
 import com.javatechie.entity.request.User;
+import com.javatechie.repository.FollowRepository;
 import com.javatechie.repository.PostRepository;
 import com.javatechie.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class FeedService {
     @Autowired
     private UserRepository userRepository;
 
-/*    @Autowired
+    @Autowired
     private FollowRepository followRepository;
 
     public List<Post> getFeedForUser(String username) {
@@ -30,5 +32,5 @@ public class FeedService {
                 .collect(Collectors.toList());
 
         return postRepository.findByUserInOrderByTimestampDesc(followingUsers);
-    }*/
+    }
 }

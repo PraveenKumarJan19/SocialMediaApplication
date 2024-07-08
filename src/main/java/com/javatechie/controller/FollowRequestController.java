@@ -1,5 +1,6 @@
 package com.javatechie.controller;
 
+import com.javatechie.entity.request.Follow;
 import com.javatechie.entity.request.FollowRequest;
 import com.javatechie.service.FollowRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,6 +16,12 @@ public class FollowRequestController {
 
     @Autowired
     private FollowRequestService followRequestService;
+
+    @GetMapping("/hello")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String getHello() {
+        return "Hello";
+    }
 
     @GetMapping("/send")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -72,5 +78,15 @@ public class FollowRequestController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/followers/{username}")
+    public List<Follow> getFollowers(@PathVariable String username) {
+        return followRequestService.getFollowers(username);
+    }
+
+    @GetMapping("/following/{username}")
+    public List<Follow> getFollowing(@PathVariable String username) {
+        return followRequestService.getFollowing(username);
     }
 }

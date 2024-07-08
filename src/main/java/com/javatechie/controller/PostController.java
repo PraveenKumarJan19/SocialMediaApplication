@@ -15,7 +15,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @RequestMapping("/addPost")
+    @PostMapping("/addPost")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String addPost(@RequestBody Post post) {
         postService.save(post);
